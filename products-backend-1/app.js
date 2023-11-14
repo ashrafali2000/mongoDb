@@ -6,6 +6,7 @@ const product = require("./routes/products");
 const signUp = require("./routes/signUp");
 const signIn = require("./routes/signIn");
 const user = require("./routes/user");
+const mongoose = require("./db/index")
 
 const app = express();
 const path = require("path");
@@ -17,6 +18,13 @@ const port = 8000;
 app.use(express.json());
 
 app.use(express.static(path.join(process.cwd(), "public")))
+
+// db CONNECTION
+const db = mongoose.connection;
+db.on("error",console.error.bind( console, "Connection Error"));
+db.once("open", function (){
+  console.log("db Connected");
+})
 
 // MidddleWare
 // app.use("/index", (req, res, nex) => {
